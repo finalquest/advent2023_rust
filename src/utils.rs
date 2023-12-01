@@ -9,3 +9,12 @@ pub fn read_lines(path: &str) -> Vec<String> {
     BufReader::new(file).lines().map(|l| l.expect("Could not parse line")).collect()
 }
 
+pub trait OnlyDigits {
+    fn only_digits(&mut self);
+}
+
+impl OnlyDigits for String {
+    fn only_digits(&mut self) {
+        self.retain(|c| c.is_ascii_digit())
+    }
+}

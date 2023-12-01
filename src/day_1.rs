@@ -1,13 +1,13 @@
 
-use crate::utils;
+use crate::utils::*;
 //Day 1
 
 
 pub fn main() -> u32  {
-    let lines = utils::read_lines("./inputs/1.txt");
+    let lines = read_lines("./inputs/1.txt");
     let mut res = Vec::new();
     for mut line in lines {
-        line.retain(|c| c.is_ascii_digit());
+        line.only_digits();
         res.push(line);
     }
     sum_lines(res)
@@ -54,11 +54,11 @@ fn convert_words_to_numbers(input: &str) -> String {
 }
 
 pub fn numbers_in_letters() -> u32 {
-    let lines = utils::read_lines("./inputs/1.txt");
+    let lines = read_lines("./inputs/1.txt");
     let mut res = Vec::new();
     for line in lines {
         let mut a = convert_words_to_numbers(&line);
-        a.retain(|c| c.is_ascii_digit());
+        a.only_digits();
         res.push(a);
     }
     sum_lines(res)
