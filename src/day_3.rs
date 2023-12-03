@@ -129,16 +129,14 @@ pub fn main2() -> u32  {
                         res.push(h.parse::<u32>().unwrap());
                     }
                 }
-                println!("res: {:?}", res);
+                // println!("res: {:?}", res);
                 if res.len() == 2 {
                     mul.push(res.iter().product::<u32>());
                 }
             }
         }
     }
-    println!("mul: {:?}", mul.iter().sum::<u32>());
-    0
-    
+    mul.iter().sum::<u32>()
 }
 
 pub fn main3() -> u32 {
