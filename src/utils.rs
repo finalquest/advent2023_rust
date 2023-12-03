@@ -11,10 +11,16 @@ pub fn read_lines(path: &str) -> Vec<String> {
 
 pub trait OnlyDigits {
     fn only_digits(&mut self);
+    fn has_symbols(&self) -> bool;
 }
+
 
 impl OnlyDigits for String {
     fn only_digits(&mut self) {
         self.retain(|c| c.is_ascii_digit())
+    }
+
+    fn has_symbols(&self) -> bool {
+        self.chars().any(|c| !c.is_ascii_digit() && c != '.')
     }
 }
