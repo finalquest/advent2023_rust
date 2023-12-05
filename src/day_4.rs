@@ -38,7 +38,6 @@ pub fn main2() -> u32  {
     while i < tup.len() {
         println!();
         println!("ARRANCO LINEA: {} con start iter: {}", tup[i].0, tup[i].1);
-        for k in 0..tup[i].1 {
             let mut res = Vec::new();
             let no_game = tup[i].0.split(":").collect::<Vec<&str>>()[1].to_string();
             let numbers = no_game.split("|").map(|x| x.to_string()).collect::<Vec<String>>();
@@ -50,9 +49,8 @@ pub fn main2() -> u32  {
                     res.push(num.parse::<u32>().unwrap());
                 }
             }
-            if res.len() == 0 {
-                break;
-            }
+        if res.len() > 0 {
+        for _k in 0..tup[i].1 {
             // println!("--------------");
             // println!("{:?}", res);
             let length = if res.len() > tup.len() - i {
@@ -66,9 +64,10 @@ pub fn main2() -> u32  {
             // println!("res: {:?}", res);
             // println!("length: {}", length);
             for j in 0..length {
-                if(i+j+1 < tup.len()) {
+                if i+j+1 < tup.len() {
                     tup[i+j+1]= (tup[i+j+1].0, tup[i+j+1].1+1)
                 }
+            }
             }
         }
         i+=1;
