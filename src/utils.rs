@@ -11,6 +11,7 @@ pub fn read_lines(path: &str) -> Vec<String> {
 
 pub trait OnlyDigits {
     fn only_digits(&mut self);
+    fn only_digits_as_vector(&self) -> Vec<u32>;
     fn has_symbols(&self) -> bool;
     fn number_between_delimiter(&self, start_poisition: u32) -> &str;
     
@@ -20,6 +21,11 @@ pub trait OnlyDigits {
 impl OnlyDigits for String {
     fn only_digits(&mut self) {
         self.retain(|c| c.is_ascii_digit())
+    }
+
+    fn only_digits_as_vector(&self) -> Vec<u32> {
+        self.chars().filter(|c| c.is_ascii_digit() || c.is_whitespace()).collect::<String>().
+        split_whitespace().map(|s| s.parse::<u32>().unwrap()).collect()
     }
 
     fn has_symbols(&self) -> bool {
