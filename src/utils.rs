@@ -3,6 +3,7 @@
 use std::fs::File;
 use std::io::prelude::*;
 use std::io::BufReader;
+use std::ops::Range;
 
 pub fn read_lines(path: &str) -> Vec<String> {
     let file = File::open(path).expect("File not found");
@@ -14,7 +15,7 @@ pub trait OnlyDigits {
     fn only_digits_as_vector(&self) -> Vec<u32>;
     fn has_symbols(&self) -> bool;
     fn number_between_delimiter(&self, start_poisition: u32) -> &str;
-    
+    fn expand_range(&self) -> Vec<Range<u64>>;    
 }
 
 
@@ -69,5 +70,16 @@ impl OnlyDigits for String {
         // println!("sp: {}, ep: {}", sp, ep);
         // println!("number: {}", &self[sp as usize..ep as usize]);
         &self[sp as usize..ep as usize]
+    }
+    fn expand_range(&self) -> Vec<Range<u64>> {
+        //the range is in the forman x lenght so for example 79 2 means 79, 80
+        let a = self.only_digits_as_vector().iter().map(|x| *x as u64).collect::<Vec<u64>>();
+        let mut r:Vec<Range<u64>> = Vec::new();
+        let mut c = 0;
+        while c < a.len() {
+                r.push(a[c]..a[c] + a[c+1]);
+            c += 2;
+        }
+        r
     }
 }
