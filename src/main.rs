@@ -5,8 +5,9 @@ mod day_2;
 mod day_3;
 mod day_4;
 mod day_5;
+mod day_6;
 
 fn main() {
-    let res = day_5::main();
+    let res = day_6::main();
     println!("{}", res);
 }
