@@ -7,10 +7,9 @@ pub fn main() -> u64  {
     fn get_card_value(card: &str) -> u32 {
         // println!("card: {}", card);
         match card {
-            "A" => 14,
-            "K" => 13,
-            "Q" => 12,
-            "J" => 11,
+            "A" => 13,
+            "K" => 12,
+            "Q" => 11,
             "T" => 10,
             "9" => 9,
             "8" => 8,
@@ -20,6 +19,7 @@ pub fn main() -> u64  {
             "4" => 4,
             "3" => 3,
             "2" => 2,
+            "J" => 1,
             _ => card.parse::<u32>().unwrap()
         }
     }
@@ -36,9 +36,25 @@ pub fn main() -> u64  {
 
     for line in lines.iter() {
         let splitted = line.split(" ").collect::<Vec<&str>>();
-        let repeated = splitted[0].to_string().repeated();
+        let mut repeated = splitted[0].to_string().repeated();
 
         // println!("splitted: {:?}, repeated: {:?}, line: {:?}", repeated.keys().len(), repeated, line);
+        let vj = match repeated.get(&'J') {
+            Some(&v) => v,
+            _ => -1
+        };
+
+        println!("repeated prev: {:?}", repeated);
+        if (vj < 5 && vj > -1) {
+            let aa = repeated.iter()
+                .filter(|&(key, _)| key != &'J')
+                .max_by_key(|entry | entry.1).unwrap();
+
+            repeated.insert(*aa.0, *aa.1 + repeated.get(&'J').unwrap());
+            repeated.remove(&'J');
+        }
+
+        println!("repeated post: {:?}", repeated);
 
         if repeated.keys().len() == 1 {
             five_of_kind.push(line);
