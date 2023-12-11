@@ -4,6 +4,8 @@ use std::fs::File;
 use std::io::prelude::*;
 use std::io::BufReader;
 use std::ops::Range;
+use std::collections::HashMap;
+
 
 pub fn read_lines(path: &str) -> Vec<String> {
     let file = File::open(path).expect("File not found");
@@ -16,6 +18,7 @@ pub trait OnlyDigits {
     fn has_symbols(&self) -> bool;
     fn number_between_delimiter(&self, start_poisition: u32) -> &str;
     fn expand_range(&self) -> Vec<Range<u64>>;    
+    fn repeated(&self) -> HashMap<char, i32>;
 }
 
 
@@ -81,5 +84,18 @@ impl OnlyDigits for String {
             c += 2;
         }
         r
+    }
+    fn repeated(&self) -> HashMap<char, i32> {
+        let mut counts = HashMap::new();
+
+        // Counting each character
+        for ch in self.chars() {
+            if ch.is_alphanumeric() { // considering only alphabetic characters
+                *counts.entry(ch).or_insert(0) += 1;
+            }
+        }
+
+        // Filtering out characters that do not repeat and creating the output
+        counts
     }
 }
